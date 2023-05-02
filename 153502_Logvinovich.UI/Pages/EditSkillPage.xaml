@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_153502_Logvinovich.UI.Pages.EditSkillPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="EditSkillPage">
+
+    <ContentPage.Resources>
+        <Style x:Key="BigText" TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <Style x:Key="BStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="LightGray"/>
+            <Setter Property="BorderColor" Value="Blue"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CharacterSpacing" Value="2"/>
+            <Setter Property="BorderWidth" Value="1.5"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="10" HorizontalOptions="Center">
+        <HorizontalStackLayout Padding="20" >
+            <Label MinimumWidthRequest="150" Text="Name" Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Text="{Binding EditSkill.Item1.Name}" WidthRequest="250"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Padding="20">
+            <Label MinimumWidthRequest="150" Text="Description" Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Text="{Binding EditSkill.Item1.Description}" WidthRequest="250"/>
+        </HorizontalStackLayout >
+
+        <HorizontalStackLayout Padding="20">
+            <Label MinimumWidthRequest="150" Text="Upgrade level" Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Keyboard="Numeric" Text="{Binding EditSkill.Item1.UpgradeLevel}" WidthRequest="250">
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior 
+                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                ValidStyle="{StaticResource ValidEntryStyle}"
+                Flags="ValidateOnValueChanged"
+                MinimumValue="1.0"
+                MaximumValue="100.0"
+                MaximumDecimalPlaces="2" />
+                </Entry.Behaviors>
+            </Entry>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Padding="20">
+            <Label MinimumWidthRequest="150" Text="Damage" Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Text="{Binding EditSkill.Item1.Damage}" WidthRequest="250"/>
+        </HorizontalStackLayout >
+
+        <HorizontalStackLayout Padding="20" Spacing="15">
+            <Button MinimumWidthRequest="200" Text="Save" Style="{StaticResource BStyle}" Command="{Binding UpdateSuperheroSkillsCommand}"/>
+            <Button MinimumWidthRequest="200" Text="Delete" Style="{StaticResource BStyle}" Command="{Binding DeleteSuperheroSkillsCommand}" IsVisible="{Binding EditSkill.Item2}"/>
+        </HorizontalStackLayout >
+        <HorizontalStackLayout Padding="20">
+            <Label MinimumWidthRequest="150" Text="Superhero" Style="{StaticResource BigText}"/>
+            <Picker BackgroundColor="White" x:Name="SuperheroPicker" TextColor="Black"
+                    ItemsSource="{Binding Superheroes}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding EditSkill.Item1.Superhero}" IsEnabled="{Binding EditSkill.Item2}"/>
+            <!-- <Entry BackgroundColor="White" TextColor="Black" Text="{Binding EditSkill.Item1.Superhero.Name}" WidthRequest="250"/> -->
+        </HorizontalStackLayout >
+        
+        <Button  HorizontalOptions="Start" WidthRequest="200" Text="Change Image" Style="{StaticResource BStyle}" Command="{Binding ChangeImageCommand}"/>
+        
+    </VerticalStackLayout>
+</ContentPage>

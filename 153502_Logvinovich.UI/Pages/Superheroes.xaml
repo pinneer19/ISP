@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:_153502_Logvinovich.UI.ViewModels"
+             xmlns:entities="clr-namespace:_153502_Logvinovich.Domain.Entities;assembly=153502_Logvinovich.Domain"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:conventer="clr-namespace:_153502_Logvinovich.UI.ValueConventers"
+             x:DataType="models:SuperheroesViewModel"
+             x:Class="_153502_Logvinovich.UI.Pages.Superheroes"
+             Title="Superheroes">
+    
+    
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding UpdateGroupListCommand}"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <conventer:LevelToColorValueConverter x:Key="LevelToColor" />
+        <conventer:InverseBoolConverter x:Key="SuperheroToBoolean" />
+        <conventer:IdToImageConventer x:Key="IdToImage"/>
+
+        <Style x:Key="Text" TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CharacterSpacing" Value="1.4"/>
+        </Style>
+    </ContentPage.Resources>
+
+
+    <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="30">
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+            <Picker HorizontalOptions="Center" ItemsSource="{Binding Superheroes}" ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedSuperhero}" Title="Select superhero" WidthRequest="150">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged" Command="{Binding UpdateMembersListCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+
+            <Border WidthRequest="300" HeightRequest="80" Stroke="Green" IsVisible="{Binding SelectedSuperhero, Converter={StaticResource SuperheroToBoolean}}"
+                StrokeThickness="2" BackgroundColor="LightGreen" StrokeShape="RoundRectangle 30 30 30 30">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" WidthRequest="300">
+                    <Label HorizontalOptions="Center" Text="{Binding SelectedSuperhero.Age, StringFormat='Age: {0:F0}'}" Style="{StaticResource Text}"/>
+                    <Label HorizontalOptions="Center" Text="{Binding SelectedSuperhero.Power, StringFormat='Power: {0:F0}'}"  Style="{StaticResource Text}"/>
+                </VerticalStackLayout>
+            </Border>
+
+
+
+            <CollectionView ItemsSource="{Binding Skills}" HorizontalOptions="Center" HeightRequest="480" WidthRequest="320">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:SuperheroSkills">
+                        <Frame Margin="0,10,0,0" BackgroundColor="{Binding UpgradeLevel, Converter={StaticResource LevelToColor}}" WidthRequest="300">
+
+                            <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="30">
+                                <Border Stroke="Black" StrokeShape="RoundRectangle 10" WidthRequest="50" HeightRequest="50" StrokeThickness="1">
+                                    <Image Aspect="AspectFill" MinimumHeightRequest="48" MinimumWidthRequest="48" x:Name="PlayerImage" BindingContext="{Binding Id}" Source="{Binding Converter={StaticResource IdToImage}}"/>
+                                </Border>
+                                <Label Text="{Binding Name}" WidthRequest="300" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type models:SuperheroesViewModel}},Path=ShowDetailsCommand}" CommandParameter="{Binding}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+            <Button Text="Add superhero" WidthRequest="200" HeightRequest="50" BorderWidth="2" BorderColor="CornflowerBlue" BackgroundColor="LightSkyBlue" TextColor="Red"
+                    Style="{StaticResource Button}" Command="{Binding AddSuperheroCommand}"/>
+            <Button Text="Add skill" WidthRequest="200" HeightRequest="50" BorderWidth="2" BorderColor="CornflowerBlue" BackgroundColor="LightSkyBlue" TextColor="Red"
+                    Style="{StaticResource Button}" Command="{Binding EditSkillCommand}"/>
+
+        </VerticalStackLayout>
+    </HorizontalStackLayout>
+
+    
+</ContentPage>

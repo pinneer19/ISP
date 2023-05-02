@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="_153502_Logvinovich.UI.Pages.AddSuperhero"
+             Title="AddSuperhero">
+
+    <ContentPage.Resources>
+        <Style x:Key="BigText" TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <Style x:Key="BStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Black"/>
+            <Setter Property="BorderColor" Value="White"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
+    <VerticalStackLayout Padding="10">
+        <HorizontalStackLayout Padding="20" >
+            <Label MinimumWidthRequest="150" Text="Name " Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Text="{Binding Superhero.Name}" WidthRequest="250"/>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Padding="20">
+            <Label MinimumWidthRequest="150" Text="Age " Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Text="{Binding Superhero.Age}" WidthRequest="250"/>
+        </HorizontalStackLayout >
+
+        <HorizontalStackLayout Padding="20">
+            <Label MinimumWidthRequest="150" Text="Power " Style="{StaticResource BigText}"/>
+            <Entry BackgroundColor="White" TextColor="Black" Keyboard="Numeric" Text="{Binding Superhero.Power}" WidthRequest="250"/>
+
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Padding="20">
+            <Button MinimumWidthRequest="200" Text="Save" Style="{StaticResource BStyle}" Command="{Binding SaveSuperheroCommand}"/>
+            
+        </HorizontalStackLayout >
+
+    </VerticalStackLayout>
+</ContentPage>

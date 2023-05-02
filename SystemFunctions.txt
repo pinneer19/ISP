@@ -1,0 +1,11 @@
+1. Show superheroes list
+2. Select superhero
+3. Show superhero skills
+4. Show superhero info
+5. Edit superhero properties
+6. Add superheroes
+7. Delete superheroes
+8. Edit superhero skills
+9. Creating new skills
+10. Adding new skills to superhero
+11. Add photo to superhero skill
